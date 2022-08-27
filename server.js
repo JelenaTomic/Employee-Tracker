@@ -89,5 +89,13 @@ function viewRoles(){
         start();
     });
 };
+
+function viewEmployees(){
+    let query = "SELECT * FROM employees";
+    db.query(query, function(error,res){
+        console.table('All employees', res);
+        start();
+    });
+};
         
     
