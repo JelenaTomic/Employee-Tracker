@@ -67,5 +67,19 @@ function views() {
         }
     });
 };
+
+function viewDepartments(){
+    let query = "SELECT * FROM departments";
+    db.query(query, function (error, res) {
+        console.table('All Departments', res);
+        
+        departmentArray = res;
+        for(i=0; i<res.length; i++){
+            newArray.push(res[i].department_name);
+        };
+        start();
+      });
+
+};
         
     
