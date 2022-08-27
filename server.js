@@ -81,5 +81,13 @@ function viewDepartments(){
       });
 
 };
+
+function viewRoles(){
+    let query = "SELECT * FROM roles";
+    db.query(query, function(error,res){
+        console.table('All roles', res);
+        start();
+    });
+};
         
     
