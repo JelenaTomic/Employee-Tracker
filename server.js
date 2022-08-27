@@ -119,3 +119,31 @@ function viewAll(){
     });
 };
     
+function adds(){
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "viewChoice",
+            message: "What would you like to add?",
+            choices: [ "Departments", "Roles" , "Employees" ,"Exit"]
+        }
+    ]).then(answer =>{
+        switch(answer.viewChoice){
+            case "Departments":
+                viewDepartments();
+            break;
+            case "Roles":
+                viewRoles();
+             break;
+            case "Employees":
+                viewEmployees();
+            break;
+            case "Exit":
+                db.end();
+            break;
+        }
+
+    });
+
+};
+   
