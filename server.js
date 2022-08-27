@@ -98,4 +98,24 @@ function viewEmployees(){
     });
 };
         
+function viewAll(){
+    console.log('Showing all employees');
+    let all = `
+    SELECT employees.id, 
+    employees.first_name,
+    employees.last_name,
+    roles.title,
+    departments.department_name AS 'department',
+    roles.salary,
+    employees.manager_id
+    FROM employees, roles, departments
+    WHERE departments.id = roles.department_id
+    AND roles.id = employees.role_id
+    `;
+    db.query(all,(error,res)=>{
+        if (error) throw   error;
+        console.table(res);
+        start();
+    });
+};
     
