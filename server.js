@@ -146,4 +146,22 @@ function adds(){
     });
 
 };
+function addDepartments() {
+    inquirer.prompt(
+      {
+        type: "input",
+        name: "addDepartments",
+        message: "What is the new department name?"
+      }
+    ).then(answer => {
+      const sql = 'INSERT INTO departments (department_name) value (?)';
+      db.query(sql, answer.addDepartments, (err, res) => {
+        if (err) throw err;
+        console.log('You added' + answer.addDepartments)
+        start();
+      })
+    });
+
+};
+  
    
