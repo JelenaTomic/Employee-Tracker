@@ -254,4 +254,30 @@ function addEmployees() {
     })
   
 };
+
+function updates() {
+    inquirer.prompt({
+      type: "list",
+      name: "choices",
+      message: "What do you want to update?",
+      choices: ["employees role", "employees manager", "Exit"]
+    }).then(answer => {
+      switch (answer.choices) {
+           case "employees role":
+             updateRole();
+           break;
+           
+           case "employees manager":
+              updateManager();
+           break;
+  
+           case "Exit":
+             db.end();
+           break;
+     
+        }
+    });
+  
+};
+  
   
