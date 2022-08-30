@@ -197,4 +197,61 @@ function addRoles() {
        });
     });
 };
+
+function addEmployees() {
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "What is the employees first name?"
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "What is the employees last name?"
+      },
+      {
+        type: "list",
+        name: "role_id",
+        message: "Which is the employees role",
+        choices: newRolesArray
+      },
+      {
+        type: "list",
+        name: "manager_id",
+        message: "Which is the employees managers name",
+        choices: ["Jen Levinson", "Oscar Martinez", "Meredith Palmer", "Phyllis Lapin-Vance", "Creed Bratton", "NULL"]
+  
+      }
+    ]).then(answer => {
+      for (i = 0; i < newRolesArray.length; i++) {
+          if (roleArray[i].title == answer.role_id) {
+             answer.role_id = roleArray[i].id;
+            }
+       }
+
+       if (answer.manager_id === "Oscar Martinez") {
+           answer.manager_id = 1;
+        }
+       else if (answer.manager_id === "Jen Levinson") {
+           answer.manager_id = 3;
+        }
+       else if (answer.manager_id === "Creed Bratton") {
+           answer.manager_id = 5;
+        }
+       else if (answer.manager_id === "Meredith Palmer") {
+           answer.manager_id = 7;
+        } 
+       else { answer.manager_id = "NULL" }
+  
+      const sql = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) value (?,?,?,?)';
+      const par = [answer.first_name, answer.last_name, answer.role_id, answer.manager_id];
+      db.query(sql, par, (error, res) => {
+           if (error) throw error;
+           console.log('New employee: ' + answer.first_name + '' + answer.last_name)
+           start();
+        })
+    })
+  
+};
   
