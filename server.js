@@ -320,5 +320,45 @@ function updateRole() {
 
 function updateManager() {   
 };
+
+
+const newRolesArray = [];
+let roleArray;
+
+function getRoles() {
+  db.query("SELECT * FROM Roles", (error, res) => {
+      if (error) throw error;
+      roleArray = res;
+      for (i = 0; i < res.length; i++) {
+         newRolesArray.push(res[i].title);
+        };
+    });
+};
+
+const newEmployeesArray = [];
+let employeeArray;
+
+function getEmployees() {
+ 
+  db.query(
+    `SELECT employees.id, 
+     employees.first_name, 
+     employees.last_name, 
+     roles.title, 
+     departments.department_name AS 'department', 
+     roles.salary
+     FROM employees, roles, departments
+     WHERE departments.id = roles.department_id 
+     AND roles.id = employees.role_id`, (err, res) => {
+      if (error) throw error;
+          employeeArray = res;
+     for (i = 0; i < res.length; i++) {
+         newEmployeesArray.push({
+               name: res[i].first_name + " " + res[i].last_name,
+               id: res[i].id
+            });
+        };
+    });
+};
   
   
