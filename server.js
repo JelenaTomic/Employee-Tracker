@@ -155,13 +155,46 @@ function addDepartments() {
       }
     ).then(answer => {
       const sql = 'INSERT INTO departments (department_name) value (?)';
-      db.query(sql, answer.addDepartments, (err, res) => {
-        if (err) throw err;
-        console.log('You added' + answer.addDepartments)
-        start();
-      })
+      db.query(sql, answer.addDepartments, (error, res) => {
+         if (error) throw error;
+         console.log('You added' + answer.addDepartments)
+         start();
+        })
     });
 
 };
   
-   
+function addRoles() {
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the new role name?"
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "What is the new role's salary?"
+      },
+      {
+        type: "list",
+        name: "id",
+        message: "Which is the role's department",
+        choices: newArray
+      }
+    ]).then(answer => {
+      for (i = 0; i < newArray.length; i++) {
+        if (departmentArray[i].department_name == answer.id) {
+          answer.id = departmentArray[i].id
+        }
+      }
+      const sql = 'INSERT INTO roles (title, salary, department_id ) value (?,?,?)';
+      const params = [answer.title, answer.salary, answer.id];
+      db.query(sql, params, (error, res) => {
+          if (error) throw error;
+          console.log('New role is made: ' + answer.title)
+          start();
+       });
+    });
+};
+  
