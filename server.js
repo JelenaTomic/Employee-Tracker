@@ -279,5 +279,46 @@ function updates() {
     });
   
 };
+
+function updateRole() {
+    inquirer.prompt([
+      {
+        type: "list",
+        name: "employee",
+        message: "Which employee would you like to update?",
+        choices: newEmployeesArray
+      },
+      {
+        type: "list",
+        name: "updateRoles",
+        message: "Which Role would you like to update?",
+        choices: newRolesArray
+      }
+    ]).then(answer => {
+      for (i = 0; i < newEmployeesArray.length; i++) {
+          if (newEmployeesArray[i].name == answer.employee) {
+             answer.employee = newEmployeesArray[i].id;
+            }
+        };
+      for (i = 0; i < newRolesArray.length; i++) {
+          if (roleArray[i].title == answer.updateRoles) {      
+              answer.updateRoles = roleArray[i].id;
+            }
+        };
+      const sql = `UPDATE employees SET employees.role_id = ? WHERE employees.id = ?`;
+      const par = [answer.updateRoles, answer.employee];
+      db.query(sql, par, (error, res)=>{
+           if (error) throw error;
+              console.log('New role update: ' + answer.updateRoles)
+            start();
+            
+        })
+
+    })
+
+}; 
+
+function updateManager() {   
+};
   
   
