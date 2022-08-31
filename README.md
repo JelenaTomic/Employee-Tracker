@@ -1,5 +1,6 @@
 # Employee-Tracker
-
+## Demo video
+https://drive.google.com/file/d/1PcA97borJXQbrbvp5wreuvF2FWQMkGbI/view
 ## Table of Contents:
   1. [Description](#Description)
   2. [Installation](#Installation)
@@ -23,7 +24,7 @@ From Git Hub repository click CODE box, select SSH and copy the repository to yo
 You will also have to install mysql, inquirer and console.table.
 ## Usage 
 Run npm start or node server.js
-
+https://drive.google.com/file/d/1PcA97borJXQbrbvp5wreuvF2FWQMkGbI/view
 ## Credits
 Youtube
 <br>
