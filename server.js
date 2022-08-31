@@ -262,7 +262,7 @@ function updates() {
       type: "list",
       name: "choices",
       message: "What do you want to update?",
-      choices: ["Employees role", "Employees manager", "Exit"]
+      choices: ["Employees role",  "Exit"]
     }).then(answer => {
       switch (answer.choices) {
            case "Employees role":
