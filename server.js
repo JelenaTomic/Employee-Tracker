@@ -2,13 +2,13 @@ const inquirer = require("inquirer");
 const db = require('./connect');
 
 const consoleTable = require('console.table');
-const { addListener } = require("./connect");
+
 
 //start server
 db.connect(error => {
     if(error) throw error;
     console.log('Database connected');
-    Start();
+    start();
     getDepartments();
     getRoles();
     getEmployees();
@@ -19,7 +19,7 @@ function start() {
       type : "list",
       name: "choices",
       message : "What would you like to do?",
-      choices : [ "View" , "Update" , "Add" , "Delete" , "Exit"]
+      choices : [ "View" , "Update" , "Add"  , "Exit"]
     }).then(answer =>{
         switch(answer.choices){
             case "View":
@@ -31,9 +31,9 @@ function start() {
             case "Add":
                 adds();
             break;
-            case "Delete":
-                deletes();
-            break;
+            // case "Delete":
+            //     deletes();
+            // break;
             case "Exit":
                 db.end();
             break;
@@ -58,9 +58,11 @@ function views() {
             case "Employees":
                 viewEmployees();
             break;
+        
             case "All":
                 viewAll();
             break;
+            
             case "Exit":
                 db.end();
             break;
@@ -74,7 +76,7 @@ function viewDepartments(){
         console.table('All Departments', res);
         
         departmentArray = res;
-        for(i=0; i<res.length; i++){
+        for(i=0; i< res.length; i++){
             newArray.push(res[i].department_name);
         };
         start();
@@ -93,7 +95,7 @@ function viewRoles(){
 function viewEmployees(){
     let query = "SELECT * FROM employees";
     db.query(query, function(error,res){
-        console.table('All employees', res);
+        console.table('All Employees', res);
         start();
     });
 };
@@ -130,13 +132,13 @@ function adds(){
     ]).then(answer =>{
         switch(answer.viewChoice){
             case "Departments":
-                viewDepartments();
+                addDepartments();
             break;
             case "Roles":
-                viewRoles();
+                addRoles();
              break;
             case "Employees":
-                viewEmployees();
+                addEmployees();
             break;
             case "Exit":
                 db.end();
@@ -260,14 +262,14 @@ function updates() {
       type: "list",
       name: "choices",
       message: "What do you want to update?",
-      choices: ["employees role", "employees manager", "Exit"]
+      choices: ["Employees role", "Employees manager", "Exit"]
     }).then(answer => {
       switch (answer.choices) {
-           case "employees role":
+           case "Employees role":
              updateRole();
            break;
            
-           case "employees manager":
+           case "Employees manager":
               updateManager();
            break;
   
@@ -321,6 +323,18 @@ function updateRole() {
 function updateManager() {   
 };
 
+const newArray = [];
+let departmentArray;
+
+function getDepartments() {
+  db.query('SELECT * FROM departments', (error, res) => {
+    if (error) throw error;
+      departmentArray = res;
+    for (i = 0; i < res.length; i++) {
+      newArray.push(res[i].department_name);
+    };
+  });
+};
 
 const newRolesArray = [];
 let roleArray;
@@ -349,7 +363,7 @@ function getEmployees() {
      roles.salary
      FROM employees, roles, departments
      WHERE departments.id = roles.department_id 
-     AND roles.id = employees.role_id`, (err, res) => {
+     AND roles.id = employees.role_id`, (error, res) => {
       if (error) throw error;
           employeeArray = res;
      for (i = 0; i < res.length; i++) {
